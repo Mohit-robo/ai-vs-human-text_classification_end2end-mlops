@@ -1,19 +1,41 @@
-# app.py
 import streamlit as st
 import mlflow.pyfunc
 import pandas as pd
+import os
 
-# Load MLflow model directly from the registered model
-# Replace "SVMTextClassifier" and version if needed
-model = mlflow.pyfunc.load_model("models:/SVMTextClassifier/5")
+# =======================
+# Configuration
+# =======================
+MODEL_SOURCE = os.environ.get("MODEL_SOURCE", "models:/SVMTextClassifier/latest")
+# You can set MODEL_SOURCE to:
+# - MLflow registry: "models:/SVMTextClassifier/latest"
+# - Local path: "./models/my_model"
+# - URL: "https://path/to/model"
 
-# Mapping prediction numbers to labels
+# =======================
+# Load Model
+# =======================
+@st.cache(allow_output_mutation=True)
+def load_model(source):
+    return mlflow.pyfunc.load_model(source)
+
+try:
+    model = load_model(MODEL_SOURCE)
+except Exception as e:
+    st.error(f"Failed to load model from {MODEL_SOURCE}: {e}")
+    st.stop()
+
+# =======================
+# Prediction Mapping
+# =======================
 label_map = {0: "Human", 1: "AI"}
 
+# =======================
+# Streamlit UI
+# =======================
 st.title("AI vs Human Text Classifier")
 st.write("Enter a text below and find out whether it was written by a human or AI:")
 
-# Text input from user
 user_input = st.text_area("Your Text Here:")
 
 if st.button("Predict"):
@@ -21,8 +43,7 @@ if st.button("Predict"):
         st.warning("Please enter some text before predicting!")
     else:
         try:
-            # MLflow model expects a list or DataFrame
-            # If your model expects column 'clean_text', use DataFrame
+            # Adjust if your model expects a specific column name
             input_df = pd.DataFrame({"clean_text": [user_input]})
             prediction = model.predict(input_df)[0]
             st.success(f"Prediction: {label_map[int(prediction)]}")
