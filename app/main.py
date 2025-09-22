@@ -15,7 +15,7 @@ MODEL_SOURCE = os.environ.get("MODEL_SOURCE", "models:/SVMTextClassifier/latest"
 # =======================
 # Load Model
 # =======================
-@st.cache(allow_output_mutation=True)
+@st.cache_resource(show_spinner=True)
 def load_model(source):
     return mlflow.pyfunc.load_model(source)
 
