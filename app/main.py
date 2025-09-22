@@ -1,12 +1,12 @@
 import streamlit as st
-import mlflow.pyfunc
 import pandas as pd
 import os
+import joblib
 
 # =======================
 # Configuration
 # =======================
-MODEL_SOURCE = os.environ.get("MODEL_SOURCE", "models:/SVMTextClassifier/latest")
+MODEL_SOURCE = 'app\model\svm_model.pkl'
 # You can set MODEL_SOURCE to:
 # - MLflow registry: "models:/SVMTextClassifier/latest"
 # - Local path: "./models/my_model"
@@ -17,7 +17,7 @@ MODEL_SOURCE = os.environ.get("MODEL_SOURCE", "models:/SVMTextClassifier/latest"
 # =======================
 @st.cache_resource(show_spinner=True)
 def load_model(source):
-    return mlflow.pyfunc.load_model(source)
+    return joblib.load(source)
 
 try:
     model = load_model(MODEL_SOURCE)
