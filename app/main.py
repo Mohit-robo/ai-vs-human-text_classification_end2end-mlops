@@ -6,7 +6,7 @@ import joblib
 # =======================
 # Configuration
 # =======================
-MODEL_SOURCE = 'app\model\svm_model.pkl'
+MODEL_SOURCE = 'model/svm_model.pkl'
 # You can set MODEL_SOURCE to:
 # - MLflow registry: "models:/SVMTextClassifier/latest"
 # - Local path: "./models/my_model"
