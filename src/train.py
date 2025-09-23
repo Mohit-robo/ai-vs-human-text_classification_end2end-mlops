@@ -108,7 +108,7 @@ def main():
         )
     # Save artifacts
     os.makedirs(ARTIFACT_DIR, exist_ok=True)
-    joblib.dump(best_pipeline, os.path.join(ARTIFACT_DIR, "svm_model.pkl"))
+    joblib.dump(best_pipeline, os.path.join(ARTIFACT_DIR, "svm_model.pkl"),  protocol=4)
 
 if __name__ == "__main__":
     main()
