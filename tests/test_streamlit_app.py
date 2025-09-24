@@ -5,7 +5,7 @@ def test_streamlit_runs():
     """Check if the Streamlit app boots without crashing"""
     try:
         result = subprocess.run(
-            ["streamlit", "run", "main/app.py", "--server.headless", "true"],
+            ["streamlit", "run", "app/main.py", "--server.headless", "true"],
             capture_output=True,
             timeout=10
         )
