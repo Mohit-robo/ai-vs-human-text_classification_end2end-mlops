@@ -187,8 +187,3 @@ Output:
 
 ------------------------------------------------------------------------
 
-## 👨‍💻 Author
-
-**Mohit Gaikwad**\
-*Stable professional \| Fun & thoughtful \| Loves building ML end-to-end
-systems*
